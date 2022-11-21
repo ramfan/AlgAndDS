@@ -1,0 +1,158 @@
+import { BinaryTree } from "../BinaryTree";
+import { NumericTreeNode } from "../Tree/NumericTreeNode";
+
+describe("Тестирование бинарного дерева поиска", () => {
+    it("Тестирование вставки", () => {
+        let tree = new BinaryTree<number>();
+        const root = new NumericTreeNode(10);
+        const node12 = new NumericTreeNode(12);
+        const node8 = new NumericTreeNode(8);
+        const node7 = new NumericTreeNode(7);
+        const node9 = new NumericTreeNode(9);
+        const node11 = new NumericTreeNode(11);
+        const node13 = new NumericTreeNode(13);
+        tree.add(root);
+        tree.add(node12);
+        tree.add(node8);
+        tree.add(node7);
+        tree.add(node9);
+        tree.add(node11);
+        tree.add(node13);
+
+        expect(root.getRight()).toEqual(node12);
+        expect(node12.getRight()).toEqual(node13);
+        expect(node12.getLeft()).toEqual(node11);
+        expect(root.getLeft()).toEqual(node8);
+        expect(node8.getLeft()).toEqual(node7);
+        expect(node8.getRight()).toEqual(node9);
+
+        tree = new BinaryTree<number>();
+        tree.add(root);
+        tree.add(node12);
+        tree.add(node8);
+        tree.add(node7);
+        tree.add(node11);
+        expect(root.getRight()).toEqual(node12);
+        expect(node12.getLeft()).toEqual(node11);
+        expect(root.getLeft()).toEqual(node8);
+        expect(node8.getLeft()).toEqual(node7);
+    });
+
+    it("Тестирование удаления. Левый потомок пустой", () => {
+        let tree = new BinaryTree<number>();
+        const root = new NumericTreeNode(10);
+        const node12 = new NumericTreeNode(12);
+        const node8 = new NumericTreeNode(8);
+        const node9 = new NumericTreeNode(9);
+        const node11 = new NumericTreeNode(11);
+        const node13 = new NumericTreeNode(13);
+        tree.add(root);
+        tree.add(node12);
+        tree.add(node8);
+        tree.add(node9);
+        tree.add(node11);
+        tree.add(node13);
+        tree.remove(node8);
+
+        expect(root.getRight()).toEqual(node12);
+        expect(node12.getRight()).toEqual(node13);
+        expect(node12.getLeft()).toEqual(node11);
+        expect(root.getLeft()).toEqual(node9);
+    });
+    it("Тестирование удаления. Правый потомок пустой", () => {
+        let tree = new BinaryTree<number>();
+        const root = new NumericTreeNode(10);
+        const node12 = new NumericTreeNode(12);
+        const node8 = new NumericTreeNode(8);
+        const node7 = new NumericTreeNode(7);
+        const node11 = new NumericTreeNode(11);
+        const node13 = new NumericTreeNode(13);
+        tree.add(root);
+        tree.add(node12);
+        tree.add(node8);
+        tree.add(node7);
+        tree.add(node11);
+        tree.add(node13);
+        tree.remove(node8);
+
+        expect(root.getRight()).toEqual(node12);
+        expect(node12.getRight()).toEqual(node13);
+        expect(node12.getLeft()).toEqual(node11);
+        expect(root.getLeft()).toEqual(node7);
+    });
+    it("Тестирование удаления. Правый потомок является полноценным деревом", () => {
+        let tree = new BinaryTree<number>();
+        const root = new NumericTreeNode(11);
+        const node7 = new NumericTreeNode(7);
+        const node15 = new NumericTreeNode(15);
+        const node5 = new NumericTreeNode(5);
+        const node9 = new NumericTreeNode(9);
+        const node3 = new NumericTreeNode(3);
+        const node6 = new NumericTreeNode(6);
+        const node8 = new NumericTreeNode(8);
+        const node10 = new NumericTreeNode(10);
+        const node13 = new NumericTreeNode(13);
+        const node20 = new NumericTreeNode(20);
+        const node12 = new NumericTreeNode(12);
+        const node14 = new NumericTreeNode(14);
+        const node18 = new NumericTreeNode(18);
+        const node25 = new NumericTreeNode(25);
+
+        tree.add(root);
+        tree.add(node7);
+        tree.add(node15);
+        tree.add(node5);
+        tree.add(node9);
+        tree.add(node3);
+        tree.add(node6);
+        tree.add(node8);
+        tree.add(node10);
+        tree.add(node13);
+        tree.add(node20);
+        tree.add(node12);
+        tree.add(node14);
+        tree.add(node18);
+        tree.add(node25);
+        expect(root.getRight()).toEqual(node15);
+        tree.remove(node15);
+        expect(root.getRight()).toEqual(node18);
+    });
+    it("Тестирование поиска", () => {
+        let tree = new BinaryTree<number>();
+        const root = new NumericTreeNode(11);
+        const node7 = new NumericTreeNode(7);
+        const node15 = new NumericTreeNode(15);
+        const node5 = new NumericTreeNode(5);
+        const node9 = new NumericTreeNode(9);
+        const node3 = new NumericTreeNode(3);
+        const node6 = new NumericTreeNode(6);
+        const node8 = new NumericTreeNode(8);
+        const node10 = new NumericTreeNode(10);
+        const node13 = new NumericTreeNode(13);
+        const node20 = new NumericTreeNode(20);
+        const node12 = new NumericTreeNode(12);
+        const node14 = new NumericTreeNode(14);
+        const node18 = new NumericTreeNode(18);
+        const node25 = new NumericTreeNode(25);
+
+        tree.add(root);
+        tree.add(node7);
+        tree.add(node15);
+        tree.add(node5);
+        tree.add(node9);
+        tree.add(node3);
+        tree.add(node6);
+        tree.add(node8);
+        tree.add(node10);
+        tree.add(node13);
+        tree.add(node20);
+        tree.add(node12);
+        tree.add(node14);
+        tree.add(node18);
+        tree.add(node25);
+        expect(tree.search(node9)).toEqual(node9);
+        expect(tree.search(new NumericTreeNode(9))).not.toEqual(node9);
+        expect(tree.search(new NumericTreeNode(9))).toBeNull();
+        expect(tree.search(root)).toEqual(root);
+    });
+});

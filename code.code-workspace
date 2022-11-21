@@ -1,0 +1,23 @@
+{
+    "folders": [
+        {
+            "name": "Корень проекта",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "cSpell.allowedSchemas": [
+            "file",
+            "gist",
+            "sftp",
+            "untitled",
+            "vscode-notebook-cell",
+            "vscode-scm",
+            "vscode-userdata"
+        ],
+        "cSpell.enabled": true,
+        "cSpell.language": "en, ru",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+}
