@@ -1,5 +1,5 @@
 import { BinaryTree } from "../BinaryTree";
-import { NumericTreeNode } from "../Tree/NumericTreeNode";
+import { NumericTreeNode } from "../NumericTreeNode";
 
 describe("Тестирование бинарного дерева поиска", () => {
     it("Тестирование вставки", () => {

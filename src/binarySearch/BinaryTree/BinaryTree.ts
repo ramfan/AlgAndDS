@@ -1,4 +1,4 @@
-import { Tree, TreeNode } from "./Tree/Tree";
+import { Tree, TreeNode } from "../Tree/Tree";
 
 export class BinaryTree<T> extends Tree<T> {
     private root: TreeNode<T> = null;
