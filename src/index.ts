@@ -1,1 +1,2 @@
-console.log("SDDS");
+class Main{}
+new Main();
