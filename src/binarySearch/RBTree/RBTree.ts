@@ -1,10 +1,16 @@
+import { assert } from "../../utils";
 import { Tree, TreeNode } from "../Tree/Tree";
 import { AbstractRBTreeNode, ERBTreeColor, RBTreeNode } from "./RBTreeNode";
 
 export class RBTree<T> extends Tree<T> {
-    private root: TreeNode<T> = null;
+    private root: AbstractRBTreeNode<T> = null;
 
     public override add(node: TreeNode<T>): void {
+        assert(
+            !!(node instanceof AbstractRBTreeNode),
+            "Node must implements RBTreeNode interface."
+        );
+
         if (this.root === null) {
             this.root = node;
         } else {
@@ -17,8 +23,8 @@ export class RBTree<T> extends Tree<T> {
     }
 
     protected override transplant(
-        source: TreeNode<T>,
-        target: TreeNode<T>
+        source: AbstractRBTreeNode<T>,
+        target: AbstractRBTreeNode<T>
     ): void {
         const rootParent: TreeNode<T> = source.getParent();
         if (rootParent !== null) {
@@ -51,13 +57,16 @@ export class RBTree<T> extends Tree<T> {
         this.transplant(root, rightSide);
     }
 
-    private addBy(node: TreeNode<T>, root: TreeNode<T>) {
+    private addBy(node: AbstractRBTreeNode<T>, root: AbstractRBTreeNode<T>) {
         if (!root) {
             return;
         }
 
         const compareResult = root.compareTo(node);
-
+        assert(
+            !!(node instanceof AbstractRBTreeNode),
+            "Node must implements RBTreeNode interface."
+        );
         if (compareResult <= 0) {
             const rightChild = root.getRight();
 
@@ -66,13 +75,6 @@ export class RBTree<T> extends Tree<T> {
             } else {
                 root.setRight(node);
                 node.setParent(root);
-                if (node instanceof AbstractRBTreeNode) {
-                    node.setColor(ERBTreeColor.RED);
-                } else {
-                    throw new Error(
-                        "Node must implements RBTreeNode interface."
-                    );
-                }
             }
         } else {
             const leftChild = root.getLeft();
@@ -81,14 +83,8 @@ export class RBTree<T> extends Tree<T> {
             } else {
                 root.setLeft(node);
                 node.setParent(root);
-                if (node instanceof AbstractRBTreeNode) {
-                    node.setColor(ERBTreeColor.RED);
-                } else {
-                    throw new Error(
-                        "Node must implements RBTreeNode interface."
-                    );
-                }
             }
         }
+        node.setColor(ERBTreeColor.RED);
     }
 }

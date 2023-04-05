@@ -5,7 +5,9 @@
       "removeComments": false,
       "sourceMap": true,
       "target": "es5",
-      "outDir": "lib"
+      "outDir": "lib",
+      "rootDir": "./src",
+      "allowSyntheticDefaultImports": true
     },
     "include": [
       "src/**/*"
