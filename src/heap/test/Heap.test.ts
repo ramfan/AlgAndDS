@@ -13,10 +13,17 @@ const comparator = (a: number, b: number) => {
 };
 
 describe("Тестирование класса Heap", () => {
-    it("Тестирование построения кучи", () => {
+    it("Тестирование построения кучи от максимального", () => {
         const source = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7];
         const expected = [16, 14, 10, 8, 7, 9, 3, 2, 4, 1];
         const heap = new Heap<number>(comparator, source);
+        expect(heap.getHeapAsArray()).toEqual(expected);
+    });
+
+    it("Тестирование построения кучи от минимального", () => {
+        const source = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7];
+        const expected = [1, 2, 3, 4, 7, 9, 10, 14, 8, 16];
+        const heap = new Heap<number>(comparator, source, "MAX");
         expect(heap.getHeapAsArray()).toEqual(expected);
     });
 });

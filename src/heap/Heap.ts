@@ -57,14 +57,14 @@ export class Heap<T> {
         return Math.round(index / 2) - 1;
     }
 
-    private isNormalFlow(i: number, j: number) {
+    private compareByDirection(i: number, j: number) {
         const compareResult = this.comparator(this.heap[i], this.heap[j]);
 
-        if (this.type === "MAX") {
-            return compareResult < 1;
+        if (this.type === "MIN") {
+            return compareResult > -1;
         }
 
-        return compareResult > -1;
+        return compareResult < 1;
     }
 
     private heapify(index: number = 0) {
@@ -77,11 +77,14 @@ export class Heap<T> {
 
         let nextIndex = index;
 
-        if (this.isValidIndex(left) && this.isNormalFlow(left, index)) {
+        if (this.isValidIndex(left) && this.compareByDirection(left, index)) {
             nextIndex = left;
         }
 
-        if (this.isValidIndex(right) && this.isNormalFlow(right, nextIndex)) {
+        if (
+            this.isValidIndex(right) &&
+            this.compareByDirection(right, nextIndex)
+        ) {
             nextIndex = right;
         }
 
