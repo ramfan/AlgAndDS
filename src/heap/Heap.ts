@@ -11,7 +11,7 @@ export class Heap<T> {
     constructor(
         comparator: ComparatorType<T>,
         initialHeap: T[] = [],
-        type: HeapDirectionType = "MIN"
+        type: HeapDirectionType = "MAX"
     ) {
         this.heap = initialHeap;
         assert(
@@ -60,7 +60,7 @@ export class Heap<T> {
     private compareByDirection(i: number, j: number) {
         const compareResult = this.comparator(this.heap[i], this.heap[j]);
 
-        if (this.type === "MIN") {
+        if (this.type === "MAX") {
             return compareResult > -1;
         }
 

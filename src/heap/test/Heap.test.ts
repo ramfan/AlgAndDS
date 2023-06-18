@@ -23,7 +23,21 @@ describe("Тестирование класса Heap", () => {
     it("Тестирование построения кучи от минимального", () => {
         const source = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7];
         const expected = [1, 2, 3, 4, 7, 9, 10, 14, 8, 16];
-        const heap = new Heap<number>(comparator, source, "MAX");
+        const heap = new Heap<number>(comparator, source, "MIN");
+        expect(heap.getHeapAsArray()).toEqual(expected);
+    });
+
+    it("Тестирование построения пустой кучи", () => {
+        const source = [];
+        const expected = [];
+        const heap = new Heap<number>(comparator, source);
+        expect(heap.getHeapAsArray()).toEqual(expected);
+    });
+
+    it("Тестирование построения пустой кучи", () => {
+        const source = [];
+        const expected = [];
+        const heap = new Heap<number>(comparator, source);
         expect(heap.getHeapAsArray()).toEqual(expected);
     });
 });
