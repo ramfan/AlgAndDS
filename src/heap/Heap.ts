@@ -4,9 +4,10 @@ import { assert } from "../utils";
 type HeapDirectionType = "MAX" | "MIN";
 
 export class Heap<T> {
-    private heap: T[];
+    private readonly heap: T[];
     private readonly comparator: ComparatorType<T> | undefined;
     private readonly type: HeapDirectionType;
+    private _heapSize = 0;
 
     constructor(
         comparator: ComparatorType<T>,
@@ -14,6 +15,7 @@ export class Heap<T> {
         type: HeapDirectionType = "MAX"
     ) {
         this.heap = initialHeap;
+        this._heapSize = this.heap.length - 1;
         assert(
             typeof comparator !== "function",
             "Comparator must have type Function"
@@ -27,14 +29,18 @@ export class Heap<T> {
     }
 
     public get heapSize() {
-        return this.heap.length - 1;
+        return this._heapSize;
+    }
+    
+    public set heapSize(size: number) {
+        this._heapSize = size;
     }
 
     private isValidIndex(index: number) {
-        return index >= 0 && index <= this.heapSize;
+        return index >= 0 && index <= this._heapSize;
     }
 
-    private swap(from: number, to: number) {
+    public swap(from: number, to: number) {
         assert(!this.isValidIndex(from), "out of bound: from = " + from);
         assert(!this.isValidIndex(to), "out of bound: to = " + to);
         const tmp = this.heap[from];
@@ -61,13 +67,13 @@ export class Heap<T> {
         const compareResult = this.comparator(this.heap[i], this.heap[j]);
 
         if (this.type === "MAX") {
-            return compareResult > -1;
+            return compareResult >= 0;
         }
 
-        return compareResult < 1;
+        return compareResult <= 0;
     }
 
-    private heapify(index: number = 0) {
+    public heapify(index: number = 0) {
         if (!this.isValidIndex(index)) {
             return;
         }
@@ -77,25 +83,25 @@ export class Heap<T> {
 
         let nextIndex = index;
 
-        if (this.isValidIndex(left) && this.compareByDirection(left, index)) {
+        if (left <= this._heapSize && this.compareByDirection(left, index)) {
             nextIndex = left;
         }
 
         if (
-            this.isValidIndex(right) &&
-            this.compareByDirection(right, nextIndex)
+            right <= this._heapSize && this.compareByDirection(right, nextIndex)
         ) {
             nextIndex = right;
         }
 
         if (nextIndex !== index) {
             this.swap(index, nextIndex);
-            return this.heapify(nextIndex);
+            this.heapify(nextIndex);
         }
     }
 
     private build() {
-        for (let i = this.heapSize; i >= 0; i--) {
+        const upLimit = Math.floor((this._heapSize + 1) / 2);
+        for (let i = upLimit; i >= 0; i--) {
             this.heapify(i);
         }
     }
