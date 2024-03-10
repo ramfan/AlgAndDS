@@ -12,12 +12,6 @@ export class QSort extends Sort {
         return this.qsort(data, 0, data.length - 1, comparator);
     }
 
-    private static swap<T>(data: T[], from: number, to: number) {
-        const tmp = data[from];
-        data[from] = data[to];
-        data[to] = tmp;
-    }
-
     private static partition<T>(
         data: T[],
         low: number,
@@ -48,6 +42,7 @@ export class QSort extends Sort {
             this.qsort(data, low, pivot - 1, comparator);
             this.qsort(data, pivot + 1, heigh, comparator);
         }
+
         return data;
     }
 }
